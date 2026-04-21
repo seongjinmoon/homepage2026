@@ -67,14 +67,16 @@
 	
 	<!-- For Pagination Tag 설정-->
 	<bean id="krdsRenderer" class="egovframework.com.cmm.EgovKrdsPaginationRenderer"/>
+	<bean id="imageRenderer" class="egovframework.com.cmm.ImagePaginationRenderer"/>
 	<bean id="paginationManager" class="org.egovframe.rte.ptl.mvc.tags.ui.pagination.DefaultPaginationManager">
 		<property name="rendererType">
 			<map>
-				<entry key="krds" value-ref="krdsRenderer"/> 
+				<entry key="krds" value-ref="krdsRenderer"/>
+				<entry key="image" value-ref="imageRenderer"/>  
 			</map>
 		</property>
 	</bean>
-
+	
 	<!-- MULTIPART RESOLVERS : Spring Framework 6.2.8 기반 파일 업로드 설정 -->
 	<bean id="local.MultiCommonsMultipartResolver" class="egovframework.com.cmm.web.EgovMultipartResolver" />
 
