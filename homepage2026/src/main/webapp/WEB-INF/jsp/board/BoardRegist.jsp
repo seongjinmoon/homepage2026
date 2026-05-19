@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ include file="/WEB-INF/jsp/include/Header.jsp" %>
 
 <c:import url="/template/header.do" charEncoding="utf-8">
 	<c:param name="title" value="게시판"/>
@@ -40,7 +36,7 @@
 
 <div class="container">
 	<div id="contents">
-		<form action="${actionUrl}" method="post" id="frm" name="frm" onsubmit="return regist()" enctype="multipart/form-data"> 
+		<form action="${actionUrl}" method="post" id="frm" name="frm" onsubmit="return regist()" <%-- enctype="multipart/form-data" --%>> 
 			<input type="hidden" name="boardId" value="${result.boardId}"/>
 			<%-- 첨부파일 삭제 때문에 returnUrl존재 --%>
 			<input type="hidden" name="returnUrl" value="/board/boardRegist.do"/>
@@ -93,14 +89,14 @@
 		                    <textarea id="boardCn" name="boardCn" rows="15" title="내용입력"><c:out value="${result.boardCn}"/></textarea>
 		                </td>
 		            </tr>
-		            
+		            <%-- 
 		            <c:if test="${not empty result.atchFileId}">
 			            <tr>
 			                <th scope="row">기존<br/>첨부파일목록</th>
 			                <td>
 			                	<c:import url="/cmm/fms/selectFileInfoForUpdate.do" charEncoding="utf-8">
 				                    <c:param name="param_atchFileId" value="${result.atchFileId}" />
-				                </c:import>    
+				                </c:import>  
 			                </td>
 			            </tr>
 		            </c:if>
@@ -112,7 +108,7 @@
 		                    <input type="file" name="file_2"/>
 		                </td>
 		            </tr>
-		            
+		             --%>
 		        </tbody>
 		    </table>
 			<div class="btn-cont ar">
@@ -162,7 +158,7 @@ function regist(){
 	}
 }
 </script>
-
+<!-- 
 <script src="https://cdn.tiny.cloud/1/xg9uuf6dha0abv164r3ngodmfu0p9vzo66mbdo8vtuiooqr9/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
 $(function(){
@@ -239,6 +235,5 @@ $(function(){
     });
 });
 </script>
- 
- 
+  -->
 <c:import url="/template/footer.do" charEncoding="utf-8"/>
