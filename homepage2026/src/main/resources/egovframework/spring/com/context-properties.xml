@@ -21,6 +21,8 @@
                 <entry key="posblAtchFileSize" value="${Globals.fileUpload.maxRequestSize}"/>
                 <entry key="Globals.fileStorePath" value="${Globals.fileStorePath}"/>
                 <entry key="Globals.addedOptions" value="false"/>
+                
+                <entry key="board.fileStorePath" value="${Globals.File}/upload/board"/>
             </map>
         </property>
     </bean>
