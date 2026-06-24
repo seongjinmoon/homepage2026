@@ -46,6 +46,7 @@
 	    </div>
 	     
 	    <%-- 목록영역 --%>
+	    <%-- 
 		<div id="bbs_wrap">
 			<div class="total">
 				총 게시물 
@@ -112,7 +113,8 @@
 	                </tbody>
 	            </table>
 	        </div>
-		<%-- 		
+      --%>   
+		 		
 		<div id="bbs_wrap">
 			<div class="total">
 				총 게시물 
@@ -235,7 +237,7 @@
 			        </div>
 	        	</c:otherwise>
 	        </c:choose>
-	           --%>
+	           
 		    <div id="paging">
 		    	<c:url var="pageUrl" value="/board/selectList.do${_BASE_PARAM}"/>
 				<c:set var="pagingParam"><c:out value="${pageUrl}"/></c:set>

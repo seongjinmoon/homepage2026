@@ -224,6 +224,12 @@
 	        <artifactId>mariadb-java-client</artifactId>
 	        <version>3.5.3</version>
 	    </dependency>
+	    
+	    <dependency>
+		    <groupId>net.coobird</groupId>
+		    <artifactId>thumbnailator</artifactId>
+		    <version>0.4.2</version>
+		</dependency>
 		
 	</dependencies>
 

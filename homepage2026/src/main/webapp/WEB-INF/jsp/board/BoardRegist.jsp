@@ -39,7 +39,7 @@
 		<form action="${actionUrl}" method="post" id="frm" name="frm" onsubmit="return regist()" enctype="multipart/form-data"> 
 			<input type="hidden" name="boardId" value="${result.boardId}"/>
 			<%-- 첨부파일 삭제 때문에 returnUrl존재 --%>
-			<input type="hidden" name="returnUrl" value="/board/boardRegist.do"/>
+			<input type="hidden" name="returnUrl" value="/board/boardRegist.do?boardId=${result.boardId}"/>
 			
 			<%-- 게시판 타입 --%>
 			<input type="hidden" name="boardType" value="${searchVO.boardType}"/>
