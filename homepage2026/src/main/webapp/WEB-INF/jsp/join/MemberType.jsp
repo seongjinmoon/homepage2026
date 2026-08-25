@@ -34,7 +34,7 @@
 				</div>
 			</div>
 		</article>
-		<%-- 		 
+		
 		<article>
 			<h3 class="icon2 ico-user">SNS회원</h3>
 	        <div class="confirm_box">
@@ -46,7 +46,7 @@
 				</div>
 			</div>
 		</article>
-		
+		<%-- 		 
 		<article>
 			<h3 class="icon2 ico-user">SNS회원</h3>
 	        <div class="confirm_box">
@@ -71,7 +71,7 @@ $(document).ready(function(){
 	});
 });
 </script>
-<!-- 
+
 <form id="joinFrm" name="joinFrm" method="post" action="/join/insertMember.do">
 	<input type="hidden" name="loginType" value=""/>
 	<input type="hidden" name="emplyrId"/>
@@ -93,7 +93,7 @@ $(document).ready(function(){
 });
 
 //카카오 키 정보 입력
-Kakao.init('a173fcb87879d714ee31c3a6a89212e8');
+Kakao.init('1f0bae55812a0a3831fda5fed8d1fe1f');
 
 //카카오SDK 초기화
 Kakao.isInitialized();
@@ -130,5 +130,5 @@ function kakaoLogin(type) {
 	alert("${loginMessage}");
 </c:if>
 </script>
-  -->
+  
 <c:import url="/template/footer.do" charEncoding="utf-8"/>

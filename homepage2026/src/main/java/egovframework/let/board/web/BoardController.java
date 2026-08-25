@@ -74,6 +74,9 @@ public class BoardController {
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 		
+		//로그아웃 테스트용
+		System.out.println("session테스트 : " + request.getSession().getAttribute("testSession"));
+		
 		return "board/BoardSelectList";
 	}
 		

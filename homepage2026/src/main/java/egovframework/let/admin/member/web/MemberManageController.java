@@ -3,15 +3,24 @@ package egovframework.let.admin.member.web;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.util.EgovUserDetailsHelper;
+import egovframework.let.mail.service.MailService;
 import egovframework.let.member.service.MemberService;
 import egovframework.let.member.service.MemberVO;
+import egovframework.let.utl.fcc.service.EgovNumberUtil;
+import egovframework.let.utl.fcc.service.EgovStringUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.Properties;
+
+import javax.mail.Session;
 
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,10 +35,10 @@ public class MemberManageController {
 	
 	@Resource(name = "egovMessageSource")
 	EgovMessageSource egovMessageSource;
-	/*
+	
 	@Resource(name = "mailService")
     private MailService mailService;
-	*/
+	
 	
 	//회원목록
 	@RequestMapping(value = "/admin/member/memberList.do")
@@ -73,7 +82,7 @@ public class MemberManageController {
 		
 		return "/admin/member/MemberRegist";
 	}
-	/*
+	
 	//비밀번호 랜덤 재발급
 	@RequestMapping(value = "/admin/member/changePwRandom.do")
 	public void changePwRandom(@ModelAttribute("searchVO") MemberVO vo, HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -117,6 +126,6 @@ public class MemberManageController {
 		printwriter.flush();
 		printwriter.close();
 	}
-	*/
+	
 	
 }

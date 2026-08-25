@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 @Controller
 public class LoginController {
@@ -40,6 +42,7 @@ public class LoginController {
         //네이버로그인 타입체크용
         request.getSession().setAttribute("naverLoginType", "LOGIN");
         */
+		
 		return "/login/Login";
 	}
 		
@@ -56,6 +59,10 @@ public class LoginController {
 		LoginVO resultVO = loginService.actionLogin(loginVO);
 		if (resultVO != null && resultVO.getId() != null && !resultVO.getId().equals("")){
 			request.getSession().setAttribute("LoginVO", resultVO);
+			
+			//로그아웃 테스트용
+			request.getSession().setAttribute("testSession", "LOGIN");
+			
 			return "redirect:/board/selectList.do";
 		} else {
 			model.addAttribute("loginMessage", egovMessageSource.getMessage("fail.common.login")); //로그인 정보가 올바르지 않습니다.
@@ -66,8 +73,11 @@ public class LoginController {
 	//로그아웃
 	@RequestMapping(value = "/login/actionLogout.do")
 	public String actionLogout(HttpServletRequest request, ModelMap model) throws Exception {
-
+		
+		//일부세션만 삭제
 		//RequestContextHolder.getRequestAttributes().removeAttribute("LoginVO", RequestAttributes.SCOPE_SESSION);
+		
+		//전체세션 삭제
 		request.getSession().invalidate();
 		
 		return "redirect:/board/selectList.do";
