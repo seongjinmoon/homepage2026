@@ -46,7 +46,7 @@
 				</div>
 			</div>
 		</article>
-		<%-- 		 
+		 
 		<article>
 			<h3 class="icon2 ico-user">SNS회원</h3>
 	        <div class="confirm_box">
@@ -58,7 +58,7 @@
 				</div>
 			</div>
 		</article>
-		 --%>
+		
 	</div>
 </form>
 

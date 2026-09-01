@@ -28,7 +28,7 @@
 							</span>
 							
                             <button type="submit" class="btn-lg spot p10">로그인</button>
-                            <%-- 
+                            
                             <div class="btn-cont">
 								<a class="btn-kakao" href="#" data-type="login">
 									<img src="/asset/front/images/common/btn-kakao.png" width="200" alt="카카오 로그인 버튼"/>
@@ -38,7 +38,7 @@
 									<img src="/asset/front/images/common/btn-naver.png" width="180" alt="네이버 로그인 버튼"/>
 								</a>
 							</div>
-							--%>
+							
 						</fieldset>
 					</form>
 				</div>
@@ -85,7 +85,7 @@ $(document).ready(function(){
 });
 
 </script>
-<!-- 
+
 <form id="frmLogin" name="frmLogin" method="post" action="/login/actionLogin.do">
 	<input type="hidden" name="loginType" value=""/>
 	<input type="hidden" id="snsId" name="id"/>
@@ -130,5 +130,5 @@ function kakaoLogin(type) {
     })
 }
 </script>
--->
+
 <c:import url="/template/footer.do" charEncoding="utf-8"/>

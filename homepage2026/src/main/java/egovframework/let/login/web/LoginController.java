@@ -2,17 +2,27 @@ package egovframework.let.login.web;
 
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
+import egovframework.let.api.naver.service.NaverLoginService;
 import egovframework.let.join.service.JoinService;
+import egovframework.let.join.service.JoinVO;
 import egovframework.let.login.service.LoginService;
+import egovframework.let.utl.fcc.service.EgovStringUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
+
+import com.github.scribejava.core.model.OAuth2AccessToken;
 
 @Controller
 public class LoginController {
@@ -22,17 +32,17 @@ public class LoginController {
 
 	@Resource(name = "egovMessageSource")
 	EgovMessageSource egovMessageSource;
-	/*
+	
 	@Resource(name = "naverLoginService")
     private NaverLoginService naverLoginService;
-	*/
+	
 	@Resource(name = "joinService")
     private JoinService joinService;
 	
 	//로그인
 	@RequestMapping(value = "/login/login.do")
-	public String login(@ModelAttribute("loginVO") LoginVO loginVO, HttpServletRequest request, ModelMap model/*, HttpSession session*/) throws Exception {
-		/*
+	public String login(@ModelAttribute("loginVO") LoginVO loginVO, HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+		
 		//Naver
         String domain = request.getServerName();
         String port = Integer.toString(request.getServerPort());
@@ -41,7 +51,7 @@ public class LoginController {
         
         //네이버로그인 타입체크용
         request.getSession().setAttribute("naverLoginType", "LOGIN");
-        */
+        
 		
 		return "/login/Login";
 	}
@@ -49,13 +59,13 @@ public class LoginController {
 	//로그인 처리
 	@RequestMapping(value = "/login/actionLogin.do")
 	public String actionLogin(@ModelAttribute("loginVO") LoginVO loginVO, HttpServletRequest request, ModelMap model) throws Exception {
-		/*
+		
 		//SNS로그인
 		if(!EgovStringUtil.isEmpty(loginVO.getLoginType())) {
 			loginVO.setId(loginVO.getLoginType() + "-" + loginVO.getId());
 			loginVO.setPassword("");
 		}
-		*/
+		
 		LoginVO resultVO = loginService.actionLogin(loginVO);
 		if (resultVO != null && resultVO.getId() != null && !resultVO.getId().equals("")){
 			request.getSession().setAttribute("LoginVO", resultVO);
@@ -85,9 +95,8 @@ public class LoginController {
 	
 	
 	//네이버 로그인 콜백
-	/*
 	@RequestMapping(value = "/login/naverLogin.do")
-	public String naverLogin(@ModelAttribute("loginVO") LoginVO loginVO, @RequestParam String code, @RequestParam String state, HttpSession session, HttpServletRequest request,HttpServletResponse response, ModelMap model)throws Exception {
+	public String naverLogin(@ModelAttribute("loginVO") LoginVO loginVO, @RequestParam("code") String code, @RequestParam("state") String state, HttpSession session, HttpServletRequest request,HttpServletResponse response, ModelMap model)throws Exception {
 		String domain = request.getServerName();
 		String port = Integer.toString(request.getServerPort());
         OAuth2AccessToken oauthToken;
@@ -150,6 +159,5 @@ public class LoginController {
 		}
 		
 	}
-	*/
 
 }
