@@ -139,7 +139,6 @@ public class ReservationAdminApplyController {
 		Map<String, Object> map = new HashMap<String, Object>(); 
     	List<String> columMap = new ArrayList<String>();
     	List<Object> valueMap = new ArrayList<Object>();
-    	//String fileName = "";
     	
     	columMap.add("번호");
  		columMap.add("신청자명");
@@ -148,8 +147,7 @@ public class ReservationAdminApplyController {
  		columMap.add("신청일");
 		
  		map.put("title", "예약신청현황");
-		//fileName = EgovStringUtil.getConvertFileName(request, "예약신청현황.xlxs");
- 		//fileName = "apply.xlxs";
+ 		request.setAttribute("filename", "applyJava");
  		
 		//관리자
 		searchVO.setMngAt("Y");
@@ -175,8 +173,6 @@ public class ReservationAdminApplyController {
 		
 		map.put("columMap", columMap);
 		map.put("valueMap", valueMap);
-		
-		//response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 		
 		return new ModelAndView("excelDownloadView", "dataMap", map);
 	}
