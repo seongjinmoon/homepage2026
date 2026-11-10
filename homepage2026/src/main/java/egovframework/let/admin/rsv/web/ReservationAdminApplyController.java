@@ -1,5 +1,6 @@
 package egovframework.let.admin.rsv.web;
 
+import java.io.Serializable;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import egovframework.com.cmm.service.EgovFileMngUtil;
 import egovframework.com.cmm.service.EgovProperties;
 import egovframework.com.cmm.service.FileVO;
 import egovframework.com.cmm.service.Globals;
+import egovframework.com.cmm.service.JsonResponse;
 import egovframework.com.cmm.util.EgovUserDetailsHelper;
 import egovframework.let.rsv.service.ReservationApplyService;
 import egovframework.let.rsv.service.ReservationApplyVO;
@@ -30,9 +32,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -176,41 +180,58 @@ public class ReservationAdminApplyController {
 		
 		return new ModelAndView("excelDownloadView", "dataMap", map);
 	}
-	/*
-	//엑셀업로드 
-    @RequestMapping(value="/admin/rsv/excelUpload.json",method=RequestMethod.POST)
-    public @ResponseBody JsonResponse excelUpload(@ModelAttribute ReservationApplyVO searchVO, ModelMap model,MultipartHttpServletRequest multiRequest,HttpServletRequest request, HttpServletResponse response) throws Exception {
-    	JsonResponse res = new JsonResponse();
-    	res.setSuccess(true);
-    	
-    	try {
-    		List<FileVO> result = null;
-			final Map<String, MultipartFile> files = multiRequest.getFileMap();
-			if (!files.isEmpty()) {
-				result = fileUtil.parseFileInf(files, "TEMP_", 0, null, "rsvFileStorePath");
-				Map<String, Object> resultMap = new HashMap<>();
-					
-				for(FileVO file : result){
-					if("xls".equals(file.getFileExtsn())||"xlsx".equals(file.getFileExtsn())){
-						searchVO.setCreatIp(request.getRemoteAddr());
-						resultMap = reservationApplyService.excelUpload(file, searchVO);
-						if(!(Boolean)resultMap.get("success")){
-							res.setMessage(String.valueOf(resultMap.get("msg")));
-							ArrayList resultList = (ArrayList) resultMap.get("resultList");
-							res.setData(resultList);
-							res.setSuccess(false);
-						}else if((Boolean)resultMap.get("success")){
-							res.setMessage(String.valueOf(resultMap.get("msg")));
-						}
-					}
-				}
-			}
-    	}catch(DataAccessException e) {
-    		res.setMessage(e.getLocalizedMessage());
-    	}
-    	return res;
-    }
-	*/
+	
+	// 엑셀업로드
+	@RequestMapping(value = "/admin/rsv/excelUpload.json", method = RequestMethod.POST)
+	public @ResponseBody JsonResponse excelUpload(
+	        @RequestParam("resveId") String resveId,
+	        @RequestParam("resveDe") String resveDe,
+	        HttpServletRequest request) throws Exception {
+
+	    JsonResponse res = new JsonResponse();
+	    res.setSuccess(true);
+
+	    // multipartResolver가 없어도 동작하도록 직접 감싸기
+	    MultipartHttpServletRequest multiRequest = (request instanceof MultipartHttpServletRequest m) ? m : new StandardMultipartHttpServletRequest(request);
+
+	    ReservationApplyVO searchVO = new ReservationApplyVO();
+	    searchVO.setResveId(resveId);
+	    searchVO.setResveDe(resveDe);
+	    searchVO.setCreatIp(request.getRemoteAddr());
+
+	    try {
+	        Map<String, MultipartFile> files = multiRequest.getFileMap();
+	        if (files.isEmpty()) {
+	            res.setSuccess(false);
+	            res.setMessage("업로드할 파일이 없습니다.");
+	            return res;
+	        }
+
+	        List<FileVO> result = fileUtil.parseFileInf(files, "TEMP_", 0, null, "rsvFileStorePath");
+
+	        for (FileVO file : result) {
+	            String ext = file.getFileExtsn() == null ? "" : file.getFileExtsn().toLowerCase();
+	            if (!"xls".equals(ext) && !"xlsx".equals(ext)) {
+	                continue;
+	            }
+
+	            Map<String, Object> resultMap = reservationApplyService.excelUpload(file, searchVO);
+	            boolean success = Boolean.TRUE.equals(resultMap.get("success"));
+
+	            res.setSuccess(success);
+	            res.setMessage(String.valueOf(resultMap.get("msg")));
+	            Object resultList = resultMap.get("resultList");
+	            if (resultList instanceof Serializable s) {
+	                res.setData(s);
+	            }
+	        }
+	    } catch (DataAccessException e) {
+	        res.setSuccess(false);
+	        res.setMessage(e.getLocalizedMessage());
+	    }
+	    return res;
+	}
+	
     @RequestMapping(value="/test.json")
     public @ResponseBody HashMap<String, String> test(@ModelAttribute ReservationApplyVO searchVO, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, String> res = new HashMap<>();

@@ -32,6 +32,20 @@
 		<property name="webBindingInitializer">
 			<bean class="egovframework.com.cmm.web.EgovBindingInitializer"/>
 		</property>
+		
+		<!-- @ResponseBody JSON 변환 활성화를 위한 MessageConverters 추가 -->
+	    <property name="messageConverters">
+	        <list>
+	            <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+	            <bean class="org.springframework.http.converter.StringHttpMessageConverter" />
+	            <bean class="org.springframework.http.converter.ResourceHttpMessageConverter" />
+	            <bean class="org.springframework.http.converter.FormHttpMessageConverter" />
+	            <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
+	            <bean class="org.springframework.http.converter.BufferedImageHttpMessageConverter" />
+	
+	            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+	        </list>
+	    </property>
 	</bean>
 
 	<!-- 화면처리용 JSP 파일명의  prefix, suffix 처리에 대한 mvc 설정  -->
